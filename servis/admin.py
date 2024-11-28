@@ -5,6 +5,7 @@ from .models import Automobilio_modelis, Automobilis, Uzsakymas, Paslauga, Uzsak
 class UzsakymoEiluteInline(admin.TabularInline):
     model = Uzsakymo_eilute
     extra = 1
+    can_delete = False
 
 
 class UzsakymasAdmin(admin.ModelAdmin):
