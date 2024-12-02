@@ -6,7 +6,7 @@ class AutomobilioModelis(models.Model):
     Modelis = models.CharField("Modelio pavadinimas", max_length=30, null=False)
 
     def __str__(self):
-        return f"Markė: {self.Marke}. Modelis: {self.Modelis}"
+        return f"{self.Marke} {self.Modelis}"
 
     class Meta:
         verbose_name = "Automobilio modelis"

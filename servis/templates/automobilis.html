@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container automobilis">
+    <h4>Automobilis: {{automobilis.AutomobilioModelis}}</h4>
+    <dl>
+        <dd>Klientas: {{automobilis.Klientas}}</dd>
+        <dd>Valstybinis NR: {{automobilis.Valstybinis_NR}}</dd>
+        <dd>VIN kodas: {{automobilis.VIN_kodas}}</dd>
+    </dl>
+</div>
+{% endblock %}
