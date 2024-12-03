@@ -18,7 +18,7 @@ class Automobilis(models.Model):
     VIN_kodas = models.CharField("Mašinos VIN numeris/kodas", max_length=25, null=False)
     Klientas = models.CharField("Kliento Vardas Pavardė", max_length=50, null=False)
     AutomobilioModelis = models.ForeignKey("AutomobilioModelis", on_delete=models.CASCADE, null=False)
-    cover = models.ImageField('Nuotrauka', upload_to='covers', null=True)
+    cover = models.ImageField('Nuotrauka', upload_to='covers', null=True, blank=True)
 
     def __str__(self):
         return f"Automobilio NR: {self.Valstybinis_NR}. Klientas: {self.Klientas}"

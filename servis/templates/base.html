@@ -11,11 +11,15 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-2">
-            {% block sidebar %}
-            <ul class="sidebar-nav">
+<!--<div class="container-fluid">-->
+<!--    <div class="row">-->
+<!--        <div class="col-sm-2">-->
+<!--            {% block sidebar %}-->
+<!--            <ul class="sidebar-nav">-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+          <a class="navbar-brand"><strong>Rajono Autoservisas</strong></a>
+        <ul class="navbar-nav mx-2">
                 <li><a href="{% url 'index' %}" type="button" class="btn btn-outline-light text-dark">Pradžia</a></li>
                 <li><a href="{% url 'apiemus' %}" class="btn btn-outline-light text-dark">Apie mus</a>
                 <li><a href="{% url 'automobiliai' %}" class="btn btn-outline-light text-dark" >Automobiliai</a>
@@ -25,14 +29,14 @@
                 <li><a href="" class="btn btn-outline-light text-dark">Atsiliepimai</a></li>
                 <li><a href="" class="btn btn-outline-light text-dark">Kontaktai</a>
                 <li><a href="" class="btn btn-outline-light text-dark">Mūsu partneriai</a></li>
-                <li>
-                    <form action="{% url 'search' %}" method="get" class="form-inline my-2 my-md-0">
-                        <input name="query" class="form-control" type="text" placeholder="Paieška">
+        </ul>
+                    <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" method="get">
+                      <input class="form-control me-2" name="query" class="form-control" type="text" placeholder="Paieška">
+                      <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
-                </li>
-            </ul>
             {% endblock %}
         </div>
+    </nav>
         <div class="col-sm-10">{% block content %}{% endblock %}</div>
     </div>
 </div>
