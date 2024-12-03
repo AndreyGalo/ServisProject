@@ -6,5 +6,7 @@ urlpatterns = [
     path('automobiliai/',views.automobiliai,name="automobiliai"),
     path('automobiliai/<int:automobilis_id>',views.automobilis,name="automobilis"),
     path('uzsakymai/',views.UzsakymasListView.as_view(),name="uzsakymai"),
-    path('uzsakymai/<int:pk>',views.UzsakymasDetailView.as_view(),name="uzsakymas")
+    path('uzsakymai/<int:pk>',views.UzsakymasDetailView.as_view(),name="uzsakymas"),
+    path('apiemus/',views.apiemus,name="apiemus"),
+    path('search/', views.search, name='search'),
 ]

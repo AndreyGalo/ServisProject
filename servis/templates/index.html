@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Autoservisas</h1>
-  <p>Sveiki atvykę į rajono autoservisą</p>
-  <p>Paslaugos:</p>
-  <ul>
-    <li><strong>Paslaugu kiekis:</strong> {{ paslaugos }}</li>
-    <li><strong>Atlikti usakymai:</strong> {{ atlikti_uzsakymai }}</li>
-    <li><strong>Automobiliu kiekis:</strong> {{ auto_modeliai }}</li>
-  </ul>
+<div class="container indexhtml">
+    <h4>Autoservisas</h4>
+    <p>Sveiki atvykę į rajono autoservisą</p>
+    <p>Paslaugos:</p>
+    <ul>
+        <li><strong>Paslaugu kiekis:</strong> {{ paslaugos }}</li>
+        <li><strong>Atlikti usakymai:</strong> {{ atlikti_uzsakymai }}</li>
+        <li><strong>Automobiliu kiekis:</strong> {{ auto_modeliai }}</li>
+    </ul>
+</div>
 {% endblock %}
