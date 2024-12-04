@@ -8,10 +8,13 @@ def index(request):
     auto_modeliai = AutomobilioModelis.objects.all().count()
     paslaugos = Paslauga.objects.all().count()
     atlikti_uzsakymai = Uzsakymas.objects.all().filter(status__exact="p").count()
+    num_visits = request.session.get("num_visits",1)
+    request.session["num_visits"] = num_visits + 1
     context = {
         "atlikti_uzsakymai" : atlikti_uzsakymai,
         "paslaugos" : paslaugos,
-        "auto_modeliai": auto_modeliai
+        "auto_modeliai": auto_modeliai,
+        "num_visits": num_visits,
     }
     return  render(request,"index.html",context=context)
 
@@ -29,7 +32,7 @@ def automobilis(request,automobilis_id):
 
 class UzsakymasListView(generic.ListView):
     model = Uzsakymas
-    paginate_by = 3
+    paginate_by = 4
     template_name = "uzsakymai_list.html"
 
 class UzsakymasDetailView(generic.DetailView):
