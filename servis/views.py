@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.views import generic
 from .models import AutomobilioModelis, Paslauga, Uzsakymas, Automobilis
@@ -19,7 +20,7 @@ def index(request):
     return  render(request,"index.html",context=context)
 
 def automobiliai(request):
-    paginator = Paginator(Automobilis.objects.all(),3)
+    paginator = Paginator(Automobilis.objects.all(),6)
     page_number = request.GET.get("page")
     automobiliai = paginator.get_page(page_number)
     # automobiliai = Automobilis.objects.all()
@@ -52,3 +53,12 @@ def search(request):
     query = request.GET.get('query')
     search_results = Automobilis.objects.filter(Q(Klientas__icontains=query) | Q(Valstybinis_NR__icontains=query) | Q(VIN_kodas__icontains=query) | Q(AutomobilioModelis__Marke__icontains=query)| Q(AutomobilioModelis__Modelis__icontains=query))
     return render(request, 'search.html', {'automobiliai': search_results, 'query': query})
+
+
+class UzsStatusasPagalVartotoja(LoginRequiredMixin, generic.ListView):
+    model = Uzsakymas
+    template_name = 'varototojo_uzsakymai.html'
+    paginate_by = 3
+
+    def get_queryset(self):
+        return Uzsakymas.objects.filter(vartotojas=self.request.user).filter(status__in=["v", "l", "p","n"]).order_by('Data')

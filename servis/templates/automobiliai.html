@@ -5,19 +5,17 @@
 <div class="row">
     {% for automobilis in automobiliai %}
     <div class="col-md-4 d-flex align-items-stretch mb-4">
-        <div class="card shadow-sm" style="width: 100%;">
+        <div class="card shadow-sm bg-secondary text-light" style="width: 100%; height: 100%;">
             {% if automobilis.cover %}
             <img src="{{ automobilis.cover.url }}" class="card-img-top" alt="Automobilio atvaizdas">
             {% else %}
             <img src="{% static 'img/no-image.jpg' %}" class="card-img-top" alt="No image available">
             {% endif %}
-            <div class="card-body">
-                <h6 class="card-subtitle mb-2 text-muted">
-                    <strong>Valstybinis NR:</strong> {{ automobilis.Valstybinis_NR }}
-                </h6>
-                <p>
-                    <a href="{% url 'automobilis' automobilis.id %}" class="btn btn-dark">{{ automobilis.AutomobilioModelis }}</a>
-                </p>
+            <div class="card-body d-flex flex-column">
+                <div class="mt-auto">
+                    <h6 class="card-subtitle mb-2 text-white">Valstybinis NR: {{ automobilis.Valstybinis_NR }}</h6>
+                    <p><a href="{% url 'automobilis' automobilis.id %}" class="btn btn-dark">{{ automobilis.AutomobilioModelis }} </a></p>
+                </div>
             </div>
         </div>
     </div>

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Mano Užsakymai: </h1>
+
+    {% if uzsakymas_list %}
+    <ul>
+
+      {% for uzsakymas in uzsakymas_list %}
+      <li class="{% if uzsakymas.pradelstas_uzsakymas %}text-danger{% endif %}">
+        Automobilis: <a href="{% url 'uzsakymas' uzsakymas.pk %}">{{uzsakymas.Automobilis.Valstybinis_NR}}</a> Užsakymo terminas: ({{ uzsakymas.due_back }})
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+      <p>Šiuo metu užsakymų neturite.</p>
+    {% endif %}       
+{% endblock %}

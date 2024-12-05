@@ -3,8 +3,8 @@
 {% block content %}
 <div class="container uzsakymai">
     <h4>Visu užsakymų sąrašas.</h4>
-    {% for uzs in uzsakymas_list %}
-    <li><a href="{{ uzs.id }}">Valstybinis NR: {{uzs.Automobilis.Valstybinis_NR}}</a> Užsakymo data: {{uzs.Data}}</li>
+    {% for uzsakymas in uzsakymas_list %}
+    <li><a href="{{ uzsakymas.id }}">Valstybinis NR: {{uzsakymas.Automobilis.Valstybinis_NR}}</a> Užsakymo data: {{uzsakymas.Data}}</li>
     {% endfor %}
 </div>
 <div class="pagination">
