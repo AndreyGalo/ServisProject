@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterField(
             model_name='automobilio_modelis',
-            name='Marke',
+            name='marke',
             field=models.CharField(max_length=30, verbose_name='Markės pavadinimas'),
         ),
         migrations.AlterField(

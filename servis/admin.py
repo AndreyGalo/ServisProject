@@ -9,20 +9,20 @@ class UzsakymoEiluteInLine(admin.TabularInline):
 
 
 class UzsakymasAdmin(admin.ModelAdmin):
-    list_display = ("Automobilis","status","Data","vartotojas","due_back")
+    list_display = ("automobilis","status","data","vartotojas","due_back")
     list_editable = ("status",)
     inlines = [UzsakymoEiluteInLine]
 
 
 class AutomobilisAdmin(admin.ModelAdmin):
-    list_display = ("Klientas", "AutomobilioModelis", "Valstybinis_NR", "VIN_kodas")
-    list_filter = ("Klientas","AutomobilioModelis")
-    search_fields = ("Valstybinis_NR","VIN_kodas")
+    list_display = ("klientas", "automobiliomodelis", "valstybinis_nr", "vin_kodas")
+    list_filter = ("klientas","automobiliomodelis")
+    search_fields = ("valstybinis_nr","vin_kodas")
     search_help_text = "Paieška pagal Automobilio valstybini Numerį arba VIN Kodą"
 
 
 class PaslaugosAdmin(admin.ModelAdmin):
-    list_display = ("Pavadinimas", "Kaina")
+    list_display = ("pavadinimas", "kaina")
 
 
 admin.site.register(AutomobilioModelis)

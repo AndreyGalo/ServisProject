@@ -6,11 +6,11 @@ from tinymce.models import HTMLField
 
 
 class AutomobilioModelis(models.Model):
-    Marke = models.CharField("Markės pavadinimas", max_length=30, null=False)
-    Modelis = models.CharField("Modelio pavadinimas", max_length=30, null=False)
+    marke = models.CharField("Markės pavadinimas", max_length=30, null=False)
+    modelis = models.CharField("Modelio pavadinimas", max_length=30, null=False)
 
     def __str__(self):
-        return f"{self.Marke} {self.Modelis}"
+        return f"{self.marke} {self.modelis}"
 
     class Meta:
         verbose_name = "Automobilio modelis"
@@ -18,14 +18,15 @@ class AutomobilioModelis(models.Model):
 
 
 class Automobilis(models.Model):
-    Valstybinis_NR = models.CharField("Mašinos valstybinis numeris", max_length=10, null=False)
-    VIN_kodas = models.CharField("Mašinos VIN numeris/kodas", max_length=25, null=False)
-    Klientas = models.CharField("Kliento Vardas Pavardė", max_length=50, null=False)
-    AutomobilioModelis = models.ForeignKey("AutomobilioModelis", on_delete=models.CASCADE, null=False)
-    aprasymas = HTMLField(null=True,blank=True)
+    valstybinis_nr = models.CharField("Mašinos valstybinis numeris", max_length=10, null=False)
+    vin_kodas = models.CharField("Mašinos VIN numeris/kodas", max_length=25, null=False)
+    klientas = models.CharField("Kliento Vardas Pavardė", max_length=50, null=False)
+    automobiliomodelis = models.ForeignKey("AutomobilioModelis", on_delete=models.CASCADE, null=False)
+    aprasymas = HTMLField(null=True, blank=True)
     cover = models.ImageField('Nuotrauka', upload_to='covers', null=True, blank=True)
+
     def __str__(self):
-        return f"Automobilio NR: {self.Valstybinis_NR}. Klientas: {self.Klientas}"
+        return f"Automobilio NR: {self.valstybinis_nr}. Klientas: {self.klientas}"
 
     class Meta:
         verbose_name = "Automobilis"
@@ -33,10 +34,11 @@ class Automobilis(models.Model):
 
 
 class Uzsakymas(models.Model):
-    Data = models.DateField("Data", null=False)
-    Automobilis = models.ForeignKey("Automobilis", on_delete=models.CASCADE, null=False)
-    vartotojas = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True)
-    due_back = models.DateField("Paruosimo data",null=True,blank=True)
+    data = models.DateField("Data", null=False)
+    automobilis = models.ForeignKey("Automobilis", on_delete=models.CASCADE, null=False)
+    vartotojas = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    due_back = models.DateField("Paruosimo data", null=True, blank=True)
+
     @property
     def pradelstas_uzsakymas(self):
         if self.due_back and date.today() > self.due_back:
@@ -58,20 +60,20 @@ class Uzsakymas(models.Model):
     )
 
     def __str__(self):
-        return f"Uzsakymo data: {self.Data}  {self.Automobilis} {self.status}"
+        return f"Uzsakymo data: {self.data}  {self.automobilis} {self.status}"
 
     class Meta:
-        ordering = ["Data"]
+        ordering = ["data"]
         verbose_name = "Užsakymas"
         verbose_name_plural = "Užsakymai"
 
 
 class Paslauga(models.Model):
-    Pavadinimas = models.TextField("Aprašymas", max_length=200, help_text='Trumpas paslaugos aprašymas')
-    Kaina = models.IntegerField("Kaina", null=False, help_text="Ivedama kaina")
+    pavadinimas = models.TextField("Aprašymas", max_length=200, help_text='Trumpas paslaugos aprašymas')
+    kaina = models.IntegerField("Kaina", null=False, help_text="Ivedama kaina")
 
     def __str__(self):
-        return f"{self.Pavadinimas}. Kaina: {self.Kaina}"
+        return f"{self.pavadinimas}. Kaina: {self.kaina}"
 
     class Meta:
         verbose_name = "Paslauga"
@@ -79,12 +81,12 @@ class Paslauga(models.Model):
 
 
 class UzsakymoEilute(models.Model):
-    Paslauga = models.ForeignKey("Paslauga", on_delete=models.CASCADE, null=False)
-    Uzsakymas = models.ForeignKey("Uzsakymas", on_delete=models.CASCADE, null=False)
-    Kiekis = models.IntegerField("Paslaugu kiekis", null=False)
+    paslauga = models.ForeignKey("Paslauga", on_delete=models.CASCADE, null=False)
+    uzsakymas = models.ForeignKey("Uzsakymas", on_delete=models.CASCADE, null=False)
+    kiekis = models.IntegerField("Paslaugu kiekis", null=False)
 
     def __str__(self):
-        return f"{self.Paslauga} {self.Uzsakymas}. Uzsakymu kiekis: {self.Kiekis}"
+        return f"{self.paslauga} {self.uzsakymas}. Uzsakymu kiekis: {self.kiekis}"
 
     class Meta:
         verbose_name = "Užsakymų suvestinė"

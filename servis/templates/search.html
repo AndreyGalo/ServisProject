@@ -6,7 +6,7 @@
     {% if automobiliai %}
     <ul>
         {% for automobilis in automobiliai %}
-        <li>Mašinos Valstybinis NR: <a href="{% url 'automobilis' automobilis.id %}">{{ automobilis.Valstybinis_NR }}</a></li>
+        <li>Mašinos Valstybinis NR: <a href="{% url 'automobilis' automobilis.id %}">{{ automobilis.valstybinis_nr }}</a></li>
         {% endfor %}
     </ul>
     {% else %}

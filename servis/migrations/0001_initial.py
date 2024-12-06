@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='Automobilio_modelis',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('Marke', models.CharField(max_length=30, verbose_name='Markes pavadinimas')),
+                ('marke', models.CharField(max_length=30, verbose_name='Markes pavadinimas')),
                 ('Modelis', models.CharField(max_length=30, verbose_name='Modelio pavadinimas')),
             ],
         ),

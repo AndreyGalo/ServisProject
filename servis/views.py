@@ -51,7 +51,7 @@ def search(request):
     didžiosios/mažosios.
     """
     query = request.GET.get('query')
-    search_results = Automobilis.objects.filter(Q(Klientas__icontains=query) | Q(Valstybinis_NR__icontains=query) | Q(VIN_kodas__icontains=query) | Q(AutomobilioModelis__Marke__icontains=query)| Q(AutomobilioModelis__Modelis__icontains=query))
+    search_results = Automobilis.objects.filter(Q(klientas__icontains=query) | Q(valstybinis_nr__icontains=query) | Q(vin_kodas__icontains=query) | Q(automobiliomodelis__marke__icontains=query)| Q(automobiliomodelis__modelis__icontains=query))
     return render(request, 'search.html', {'automobiliai': search_results, 'query': query})
 
 
@@ -61,4 +61,4 @@ class UzsStatusasPagalVartotoja(LoginRequiredMixin, generic.ListView):
     paginate_by = 3
 
     def get_queryset(self):
-        return Uzsakymas.objects.filter(vartotojas=self.request.user).filter(status__in=["v", "l", "p","n"]).order_by('Data')
+        return Uzsakymas.objects.filter(vartotojas=self.request.user).order_by('data')
