@@ -1,22 +1,40 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container uzsakymas_detail">
-    <h4>Mašinos Valstybinis NR: {{ uzsakymas.automobilis.valstybinis_nr }}</h4>
-
-    <p><strong>Užsakymo Data: </strong>{{ uzsakymas.Data }}</p>
-    <p><strong>Mašinos VIN kodas </strong>{{ uzsakymas.automobilis.vin_kodas }}</p>
-    <p><strong>Modelis/Marke: </strong>{{ uzsakymas.automobilis.automobiliomodelis }}</p>
-    <p><strong>Klientas: </strong>{{ uzsakymas.automobilis.klientas }}</p>
-    <h4>Paslaugos:</h4>
-    {% for eilute in uzsakymas.uzsakymoeilute_set.all %}
-    <p><strong>Paslauga:</strong> {{ eilute.paslauga.pavadinimas }} </p>
-    <p><strong>Kaina</strong> {{ eilute.paslauga.kaina }} €</p>
-    <p><strong>Kiekis:</strong> {{ eilute.kiekis }}</p>
-    <h4>Paslaugos statusas:</h4>
-    <p class="{% if uzsakymas.status == 'p' %}text-success{% elif uzsakymas.status == 'n' %}text-danger{% else %}text-warning{% endif %}">
-        {{ uzsakymas.get_status_display }}
-    </p>
-</div>
-{% endfor %}
+    <div class="container uzsakymas_detail">
+        <h4>Mašinos Valstybinis NR: {{ uzsakymas.automobilis.valstybinis_nr }}</h4>
+        <p><strong>Užsakymo Data: </strong>{{ uzsakymas.Data }}</p>
+        <p><strong>Mašinos VIN kodas </strong>{{ uzsakymas.automobilis.vin_kodas }}</p>
+        <p><strong>Modelis/Marke: </strong>{{ uzsakymas.automobilis.automobiliomodelis }}</p>
+        <p><strong>Klientas: </strong>{{ uzsakymas.automobilis.klientas }}</p>
+        <h4>Paslaugos:</h4>
+            {% for eilute in uzsakymas.uzsakymoeilute_set.all %}
+                <p><strong>Paslauga:</strong> {{ eilute.paslauga.pavadinimas }} </p>
+                <p><strong>Kaina</strong> {{ eilute.paslauga.kaina }} €</p>
+                <p><strong>Kiekis:</strong> {{ eilute.kiekis }}</p>
+                <h4>Paslaugos statusas:</h4>
+                <p class="{% if uzsakymas.status == 'p' %}text-success{% elif uzsakymas.status == 'n' %}text-danger{% else %}text-warning{% endif %}">{{ uzsakymas.get_status_display }}</p>
+                    <h4>Atsiliepimai:</h4>
+                    {% if uzsakymas.uzsakymasatsiliepimas_set.all %}
+                        {% for review in uzsakymas.uzsakymasatsiliepimas_set.all %}
+                        <hr>
+                        <strong>{{ review.atsiliepimas }}</strong>, <em>{{ review.date_created}}</em>
+                        <p>{{ review.content }}</p>
+                        {% endfor %}
+                    {% else %}
+                    <p>Užsakymas neturi atsiliepimų</p>
+                    {% endif %}
+                {% if user.is_authenticated %}
+                <div class="fieldWrapper">
+                  <hr>
+                  <h4>Palikite atsiliepimą:</h4>
+                  <form action="" method="post">
+                      {% csrf_token %}
+                      {{ form.content }}<br>
+                      <input type="submit" value="Išsaugoti" class="btn btn-primary btn-sm text-dark">
+                  </form>
+                </div>
+                {% endif %}
+            {% endfor %}
+    </div>
 {% endblock %}

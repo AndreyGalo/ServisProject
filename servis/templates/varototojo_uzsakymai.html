@@ -5,15 +5,14 @@
 
     {% if uzsakymas_list %}
     <ul>
-
       {% for uzsakymas in uzsakymas_list %}
+        <img class="rounded-circle" src="{{uzsakymas.vartotojas.profilis.nuotrauka.url}}">
       <li class="{% if uzsakymas.pradelstas_uzsakymas %}text-danger{% endif %}">
         Automobilis: <a href="{% url 'uzsakymas' uzsakymas.pk %}">{{uzsakymas.automobilis.valstybinis_nr}}</a> Užsakymo terminas: ({{ uzsakymas.due_back }})
       </li>
       {% endfor %}
     </ul>
-
     {% else %}
       <p>Šiuo metu užsakymų neturite.</p>
-    {% endif %}       
+    {% endif %}
 {% endblock %}

@@ -33,7 +33,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'servis',
+    'servis.apps.ServisConfig',
+    'crispy_forms',
+    'crispy_bootstrap4',
     'tinymce',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -172,3 +174,5 @@ TINYMCE_DEFAULT_CONFIG = {
     'menubar': True,
     'statusbar': True,
     }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
