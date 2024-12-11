@@ -1,13 +1,15 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.urls import reverse
 from django.views import generic
 from django.views.decorators.csrf import csrf_protect
-from django.views.generic.edit import FormMixin
+from django.views.generic import CreateView,UpdateView,DeleteView
 from django.contrib.auth.decorators import login_required
-from .forms import UzsakymasAtsiliepimasForm, UserUpdateForm, ProfilisUpdateForm
+from django.views.generic.edit import FormMixin
+
+from .forms import UzsakymasAtsiliepimasForm, UserUpdateForm, ProfilisUpdateForm, UserUzsCreateForm, UserUzsUpdateForm
 from .models import AutomobilioModelis, Paslauga, Uzsakymas, Automobilis
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
@@ -95,7 +97,7 @@ def search(request):
 class UzsStatusasPagalVartotoja(LoginRequiredMixin, generic.ListView):
     model = Uzsakymas
     template_name = 'varototojo_uzsakymai.html'
-    paginate_by = 3
+    paginate_by = 10
 
     def get_queryset(self):
         return Uzsakymas.objects.filter(vartotojas=self.request.user).order_by('data')
@@ -150,3 +152,43 @@ def profilis(request):
         'p_form': p_form,
     }
     return render(request, 'profilis.html',context)
+
+class UzsakymasByUserDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Uzsakymas
+    template_name = 'vartotojo_uzsakymas.html'
+
+
+class UzsByUserCreateView(LoginRequiredMixin, CreateView):
+    model = Uzsakymas
+    # fields = ['automobilis', 'due_back']
+    success_url = "/servis/myorders/"
+    template_name = 'user_uzs_form.html'
+    form_class = UserUzsCreateForm
+
+    def form_valid(self, form):
+        form.instance.vartotojas = self.request.user
+        return super().form_valid(form)
+
+class UzsByUserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Uzsakymas
+    # fields = ['automobilis', 'due_back']
+    success_url = "/servis/myorders/"
+    template_name = 'user_uzs_form.html'
+    form_class = UserUzsUpdateForm
+
+    def form_valid(self, form):
+        form.instance.vartotojas = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        uzsakymas = self.get_object()
+        return self.request.user == uzsakymas.vartotojas
+
+class UzsByUserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Uzsakymas
+    success_url = "/servis/myorders/"
+    template_name = 'user_uzs_delete.html'
+
+    def test_func(self):
+        uzsakymas = self.get_object()
+        return self.request.user == uzsakymas.vartotojas

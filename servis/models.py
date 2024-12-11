@@ -1,3 +1,4 @@
+import datetime
 from datetime import date
 from PIL import Image
 from django.contrib.auth.models import User
@@ -34,7 +35,7 @@ class Automobilis(models.Model):
 
 
 class Uzsakymas(models.Model):
-    data = models.DateField("Data", null=False)
+    data = models.DateField("Data", null=False,default=datetime.date.today)
     automobilis = models.ForeignKey("Automobilis", on_delete=models.CASCADE, null=False)
     vartotojas = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     due_back = models.DateField("Paruosimo data", null=True, blank=True)

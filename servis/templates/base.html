@@ -18,6 +18,7 @@
             {% if user.is_authenticated %}
             <li class="nav-item"><a href="{% url 'profilis'%}" class="btn btn-primary btn-sm">{{ user.get_username }}</a></li>
             <li class="nav-item"><a class="btn btn-primary btn-sm" href="{% url 'mano-uzsakymai' %}">Mano Užsakymai</a></li>
+            <li class="nav-item"><a class="btn btn-primary btn-sm" href="{% url 'my-order-new'%}?next=/servis">Naujas</a></li>
             <li class="nav-item">
                 <form method="post" action="{% url 'logout' %}">
                     {% csrf_token %}

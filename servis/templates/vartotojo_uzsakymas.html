@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Uzsakymas</h1>
+        <ul>
+            <img class="rounded-circle" src="{{uzsakymas.vartotojas.profilis.nuotrauka.url}}">
+            <li><strong class="{% if uzsakymas.pradelstas_uzsakymas %}text-danger{% endif %}">Užsakymo terminas: ({{ uzsakymas.due_back }})</strong></li>
+            <li>Automobilis: {{uzsakymas.automobilis.valstybinis_nr}}</li>
+               {% if uzsakymas.vartotojas == user %}
+                <div>
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'my-order-update' uzsakymas.id %}">Redaguoti</a>
+                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'my-order-delete' uzsakymas.id %}">Ištrinti</a>
+                </div>
+                {% endif %}
+
+        </ul>
+{% endblock %}
